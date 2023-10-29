@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import axios from 'axios';
-import { useHistory}  from 'react-router-dom';
+import { useHistory }  from 'react-router-dom';
 
-const Register = () => {
+const Register = ({authenticateUser}) => {
+    let history = useHistory();
     const [userData, setUserData] = useState({
         name: '',
         email: '',
@@ -38,9 +39,12 @@ const Register = () => {
                 }
                 const body = JSON.stringify(newUser);
                 const res = await axios.post('http://localhost:5000/api/users', body, config);
+
+
               localStorage.setItem('token', res.data.token);
               history.push('/');
             } catch (error) {
+
                 localStorage.removeItem('token');
 
                 setErrorData({
